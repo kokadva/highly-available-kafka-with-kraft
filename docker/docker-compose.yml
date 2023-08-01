@@ -1,0 +1,25 @@
+version: '3'
+services:
+  broker-0:
+    image: kafka
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    environment:
+      NODE_ID: 0
+      REPLICAS: 2
+      CLUSTER_ID: "oh-sxaDRTcyAr6pFRbXyzA"
+      SHARE_DIR: "/mtn"
+    volumes:
+      - '/Users/konstantinedvalishvili/PycharmProjects/ha-kafka-kube/data:/mtn'
+
+
+  broker-1:
+    image: kafka
+    environment:
+      NODE_ID: 1
+      REPLICAS: 2
+      CLUSTER_ID: "oh-sxaDRTcyAr6pFRbXyzA"
+      SHARE_DIR: "/mtn"
+    volumes:
+      - '/Users/konstantinedvalishvili/PycharmProjects/ha-kafka-kube/data:/mtn'
