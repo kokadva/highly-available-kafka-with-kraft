@@ -11,16 +11,13 @@ RUN apt update \
     && wget ${kafkaurl} -O kafka.tgz \
     && tar xvzf kafka.tgz \
     && mv kafka_${scalaversion}-${kafkaversion} kafka \
-    && apt remove -y wget \
-    && apt autoremove -y \
-    && rm -rf /var/lib/apt/lists/* \
     && rm kafka.tgz
 
 
 WORKDIR /app/kafka
 
 COPY ./server.properties .
-COPY ./*.sh .
+COPY ./entrypoint.sh .
 
 RUN chmod +x entrypoint.sh
 

@@ -1,4 +1,4 @@
-bootstrap_servers = "localhost:9092"
+bootstrap_servers = "broker-0:9092,broker-1:9092"
 topic = "test"
 replication_factor = 1
 partitions = 1

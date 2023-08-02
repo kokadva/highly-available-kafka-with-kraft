@@ -3,9 +3,17 @@
 KAFKA_DIR="/app/kafka"
 KAFKA_BIN_DIR="${KAFKA_DIR}/bin"
 
-LISTENERS="CONTROLLER://:19092,EXTERNAL://:9093,INTERNAL://:9092"
+INTER_BROKER_LISTENER_NAME="BROKER_LISTENER"
 
-ADVERTISED_LISTENERS="EXTERNAL://localhost:19092,INTERNAL://localhost:9092"
+CONTROLLER_LISTENER_NAMES="CONTROLLER"
+
+LISTENERS="CONTROLLER://:19092,BROKER_LISTENER://:19093,LOCAL://:9092,EXTERNAL://:9093"
+
+ADVERTISED_LISTENERS="BROKER_LISTENER://broker-$NODE_ID:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093"
+
+LISTENER_SECURITY_PROTOCOL_MAP="CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+
+
 
 CONTROLLER_QUORUM_VOTERS=""
 
@@ -26,6 +34,9 @@ sed -i \
 -e "s+^log.dirs=.*+log.dirs=$SHARE_DIR/$NODE_ID+" \
 -e "s+^listeners=.*+listeners=$LISTENERS+" \
 -e "s+^advertised.listeners=.*+advertised.listeners=$ADVERTISED_LISTENERS+" \
+-e "s+^listener.security.protocol.map=.*+listener.security.protocol.map=$LISTENER_SECURITY_PROTOCOL_MAP+" \
+-e "s+^inter.broker.listener.name=.*+inter.broker.listener.name=$INTER_BROKER_LISTENER_NAME+" \
+-e "s+^controller.listener.names=.*+controller.listener.names=$CONTROLLER_LISTENER_NAMES+" \
 $KAFKA_DIR/server.properties
 
 if [[ ! -f "$SHARE_DIR/$NODE_ID/cluster_id" ]]; then
