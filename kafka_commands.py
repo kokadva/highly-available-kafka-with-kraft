@@ -1,6 +1,6 @@
-bootstrap_servers = "broker-0:9092,broker-1:9092"
+bootstrap_servers = "kafka-0.kafka-svc.default.svc.cluster.local:19093,kafka-1.kafka-svc.default.svc.cluster.local:19093,kafka-2.kafka-svc.default.svc.cluster.local:19093"
 topic = "test"
-replication_factor = 1
+replication_factor = 3
 partitions = 1
 consumers_group = 'consumers'
 

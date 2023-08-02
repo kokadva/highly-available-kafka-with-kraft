@@ -40,7 +40,7 @@ sed -i \
 $KAFKA_DIR/server.properties
 
 if [[ ! -f "$SHARE_DIR/$NODE_ID/cluster_id" ]]; then
-    echo $CLUSTER_ID > $SHARE_DIR/cluster_id
+    echo $CLUSTER_ID > $SHARE_DIR/$NODE_ID/cluster_id
     ./bin/kafka-storage.sh format -t $CLUSTER_ID -c $KAFKA_DIR/server.properties;
 fi
 
