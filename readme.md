@@ -24,9 +24,9 @@ to your needs
 ### Kafka configuration:
 
 Supported env variables:
-* `STORAGE_DIR`: directory for saving logs, default: `/mtn`
-* `CLUSTER_ID`: cluster id, default: `oh-sxaDRTcyAr6pFRbXyzA`, this variable must be same for all nodes
 * `NODE_ID`: node id, default: `0`, each node must have unique node id, starting from 0 (config property: `node.id`)
+* `STORAGE_DIR`: directory for saving logs, default: `/mtn` (actual logs will be saved in `STORAGE_DIR`/`NODE_ID` directory)
+* `CLUSTER_ID`: cluster id, default: `oh-sxaDRTcyAr6pFRbXyzA`, this variable must be same for all nodes
 * `REPLICAS`: number of replicas, default: '1', number of nodes in the cluster, this variable must be same for all nodes
 * `INTER_BROKER_LISTENER_NAME`: default `BROKER_LISTENER` (config property: `inter.broker.listener.name`)
 * `CONTROLLER_LISTENER_NAMES`: default `CONTROLLER` (config property: `controller.listener.names`)
