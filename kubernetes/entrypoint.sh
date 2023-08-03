@@ -6,8 +6,6 @@
 # Extract the node ID from the pod hostname
 NODE_ID=${HOSTNAME:6}
 
-# Define Kafka directories
-
 KAFKA_DIR="/app/kafka"
 
 KAFKA_BIN_DIR="${KAFKA_DIR}/bin"
