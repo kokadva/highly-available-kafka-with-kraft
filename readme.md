@@ -5,8 +5,8 @@
 * build docker image: `docker build -t kafka .`
 * run `docker compose up`
 
-If you want to run multiple brokers, add `broker-1` and `broker-2` services
-in the docker compose, set `NODE_ID` to 1 and 2 accordingly
+If you want to run multiple brokers, add `broker-1`, `broker-2` etc. to the services
+
 
 ### How to build and run for kubernetes (in the `kubernetes` directory):
 
