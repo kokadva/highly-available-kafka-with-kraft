@@ -6,20 +6,20 @@ services:
       - '9092:9092'
     environment:
       NODE_ID: 0
-      REPLICAS: 2
+      REPLICAS: 1
       CLUSTER_ID: "oh-sxaDRTcyAr6pFRbXyzA"
-      SHARE_DIR: "/mtn"
+      STORAGE_DIR: "/mtn"
     volumes:
       - '/Users/konstantinedvalishvili/PycharmProjects/kafka/data:/mtn'
-
-  broker-1:
-    image: kafka
-    ports:
-      - '9093:9092'
-    environment:
-      NODE_ID: 1
-      REPLICAS: 2
-      CLUSTER_ID: "oh-sxaDRTcyAr6pFRbXyzA"
-      SHARE_DIR: "/mtn"
-    volumes:
-      - '/Users/konstantinedvalishvili/PycharmProjects/kafka/data:/mtn'
+#
+#  broker-1:
+#    image: kafka
+#    ports:
+#      - '9093:9092'
+#    environment:
+#      NODE_ID: 1
+#      REPLICAS: 2
+#      CLUSTER_ID: "oh-sxaDRTcyAr6pFRbXyzA"
+#      SHARE_DIR: "/mtn"
+#    volumes:
+#      - '/Users/konstantinedvalishvili/PycharmProjects/kafka/data:/mtn'
