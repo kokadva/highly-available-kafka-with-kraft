@@ -39,6 +39,10 @@ Supported env variables:
 * `LISTENER_SECURITY_PROTOCOL_MAP`: default `CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT` (config property: `listener.security.protocol.map`)
 * more coming soon ...
 
+### Public docker image:
+
+* Docker image on `hub.docker.com`: `kokadva/kafka-kraft-kube:3.3.1`
+* Run to pull docker image: `docker pull kokadva/kafka-kraft-kube:3.3.1`
 
 ### Authors:
 
