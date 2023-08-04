@@ -1,3 +1,5 @@
+[![Docker Image build/push](https://github.com/kokadva/highly-available-kafka-with-kraft/actions/workflows/docker-image.yml/badge.svg)](https://github.com/kokadva/highly-available-kafka-with-kraft/actions/workflows/docker-image.yml)
+
 ## Highly available Kafka with Kraft
 
 ### How to build and run for docker (in the `docker` directory):
