@@ -7,7 +7,3 @@ services:
     environment:
       NODE_ID: 0
       REPLICAS: 1
-      CLUSTER_ID: "oh-sxaDRTcyAr6pFRbXyzA"
-      STORAGE_DIR: "/mtn"
-    volumes:
-      - './data/data:/mtn'

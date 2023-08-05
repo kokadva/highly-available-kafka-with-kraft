@@ -1,74 +1,80 @@
 [![Docker Image build/push](https://github.com/kokadva/highly-available-kafka-with-kraft/actions/workflows/docker-image.yml/badge.svg)](https://github.com/kokadva/highly-available-kafka-with-kraft/actions/workflows/docker-image.yml)
 
-## Highly available Kafka with KRaft mode on Kubernetes
+## Highly Available Kafka in KRaft Mode on Kubernetes
 
-This repository contains the Dockerfiles and Kubernetes configuration files for running Highly available Kafka in
-KRaft mode in kubernetes. KRaft (Kafka Raft metadata mode), is a mode where Kafka runs without ZooKeeper.
+Welcome to our repository! Here, you will find the necessary Dockerfiles and Kubernetes configuration files required to
+run a highly available Kafka in KRaft mode on Kubernetes. KRaft, or Kafka Raft metadata mode, enables Kafka to operate
+without the need for ZooKeeper.
 
 ## Kafka Version
 
-The current Kafka version used is `3.3.1`.
+This setup uses Kafka version 3.3.1.
 
 ## Public docker images:
 
-* Docker image for Kubernetes `kokadva/kafka-kraft-kube`
-* Docker image for docker-compose: `kokadva/kafka-kraft-compose` 
+We have provided Docker images for both Kubernetes and docker-compose for your convenience:
+
+* Kubernetes Docker Image: `kokadva/kafka-kraft-kube`
+* Docker-compose Docker Image: `kokadva/kafka-kraft-compose`
 
 ## Pre-requisites
 
+Before you get started, make sure you have the following:
+
 - Docker
 - Kubernetes
-- Container Image registry account (Optional)
+- Optional: Container Image Registry Account
 
-### How to build and run for docker-compose (resources in the `docker/docker-compose` directory):
+### How to Build and Run for Docker-compose
 
-* build docker image: `docker build -t kafka .`
-* run `docker compose up`
+Navigate to the docker/docker-compose directory in the repository, then:
 
-If you want to run multiple brokers, add `broker-1`, `broker-2` etc. to the services in docker compose and adjust env
-variables accordingly.
+* Build the Docker image: `docker build -t kafka .`
+* Run Docker compose: `docker compose up`
 
-### How to build and run for kubernetes (resources in the `docker/kubernetes` directory):
+To run multiple brokers, simply add broker-1, broker-2, and so forth to the services in Docker compose and adjust the
+environment variables as needed (`NODE_ID`, `REPLICAS`).
 
-* If you don't want to build the image yourself you can use mine: `kokadva/kafka-kraft-kube`
+### How to Build and Run for Kubernetes
 
-Important: You'll need to build the docker image on the OS which you have on your kube nodes !!!
-You'll also need container image registry account
+Navigate to the docker/kubernetes directory in the repository. If you prefer not to build the image yourself, you can
+use ours: `kokadva/kafka-kraft-kube`
 
-* login to your image registry: `docker login`
-* build docker image: `docker build -t {your-username}/kafka .`
-* push docker image: `docker push -t {your-username/kafka .`
-* run in kubernetes `kubectl apply -f kafka.yml` (adjust configuration to your needs)
+Note: The Docker image must be built on the same OS as your Kubernetes nodes. A container image registry account is
+also necessary.
 
-This process will run 3 kafka nodes in kubernetes cluster. To test it you can ssh into one of your kafka nodes:
+* Login to your image registry: `docker login`
+* Build the Docker image: `docker build -t {your-username}/kafka .`
+* Push the Docker image: `docker push -t {your-username/kafka .`
+* Apply the Kubernetes configuration: `kubectl apply -f kafka.yml` (Modify configuration as needed)
+
+This process will launch 3 Kafka nodes in your Kubernetes cluster. To test this, you can ssh into one of your Kafka
+nodes using `kubectl exec -it kafka-0 -- /bin/bash`. Navigate to the `/app/kafka/bin directory` and run kafka commands.
+To list all Kafka commands run [kafka_commands.py](kafka_commands.py) python script.
 
 * `kubectl exec -it kafka-0 -- /bin/bash`
 
-Go to `/app/kafka/bin` directory and use kafka commands which can be listed by
-running [kafka_commands.py](kafka_commands.py)
-
 ### Kafka configuration:
 
-Supported env variables:
+You can use the following environment variables for configuration:
 
-* `NODE_ID`: node id, default: `0`, each node must have unique node id, starting from 0 (config property: `node.id`)
-* `STORAGE_DIR`: directory for saving logs, default: `/mtn` (actual logs will be saved in `STORAGE_DIR`/`NODE_ID`
-  directory)
-* `CLUSTER_ID`: cluster id, default: `oh-sxaDRTcyAr6pFRbXyzA`, this variable must be same for all nodes
-* `REPLICAS`: number of replicas, default: '1', number of nodes in the cluster, this variable must be same for all nodes
-* `INTER_BROKER_LISTENER_NAME`: default `BROKER_LISTENER` (config property: `inter.broker.listener.name`)
-* `CONTROLLER_LISTENER_NAMES`: default `CONTROLLER` (config property: `controller.listener.names`)
-* `LISTENERS`: default `CONTROLLER://:19092,BROKER_LISTENER://:19093,LOCAL://:9092,EXTERNAL://:9093` (config
+- `NODE_ID`: Unique node id for each node, starting from 0. Default: `0` (config property: `node.id`)
+- `STORAGE_DIR`: Directory for storing logs. Actual logs will be saved in the `STORAGE_DIR/NODE_ID` directory.
+  Default: `/mtn`
+- `CLUSTER_ID`: ID for the cluster. Must be the same for all nodes. Default: `oh-sxaDRTcyAr6pFRbXyzA`
+- `REPLICAS`: Number of replicas or nodes in the cluster. Must be the same for all nodes. Default: '1'
+- `INTER_BROKER_LISTENER_NAME`: Default: `BROKER_LISTENER` (config property: `inter.broker.listener.name`)
+- `CONTROLLER_LISTENER_NAMES`: Default: `CONTROLLER` (config property: `controller.listener.names`)
+- `LISTENERS`: Default: `CONTROLLER://:19092,BROKER_LISTENER://:19093,LOCAL://:9092,EXTERNAL://:9093` (config
   property: `listeners`)
-* `ADVERTISED_LISTENERS`: (config property: `advertised.listeners`) default:
-    * For docker: `BROKER_LISTENER://broker-$NODE_ID:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093`
-    * For
-      kubernetes: `BROKER_LISTENER://kafka-$NODE_ID.$SERVICE.$NAMESPACE.svc.cluster.local:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093`
-* `LISTENER_SECURITY_PROTOCOL_MAP`:
-  default `CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT` (config
+- `ADVERTISED_LISTENERS`: (config property: `advertised.listeners`)
+    - For docker, default: `BROKER_LISTENER://broker-$NODE_ID:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093`
+    - For Kubernetes,
+      default: `BROKER_LISTENER://kafka-$NODE_ID.$SERVICE.$NAMESPACE.svc.cluster.local:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093`
+- `LISTENER_SECURITY_PROTOCOL_MAP`:
+  Default: `CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT` (config
   property: `listener.security.protocol.map`)
-* more coming soon ...
-
+- More coming soon ...
 
 ### Authors:
 
