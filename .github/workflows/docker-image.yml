@@ -3,21 +3,39 @@ name: Docker Image build/push
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'docker/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'docker/**'
 
 jobs:
 
-  build:
+  build_kubernetes:
 
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.head.repo.full_name, 'docker/kubernetes') || contains(github.ref, 'main')
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Login 
-      run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_KEY}}
-    - name: Build the Docker image
-      run: docker build -t kokadva/kafka-kraft-kube:3.3.1 -f kubernetes/Dockerfile kubernetes/
-    - name: Push the Docker image
-      run: docker push kokadva/kafka-kraft-kube:3.3.1
-      
+      - uses: actions/checkout@v3
+      - name: Login
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_KEY}}
+      - name: Build the Docker image
+        run: docker build -t kokadva/kafka-kraft-kube -f docker/kubernetes/Dockerfile .
+      - name: Push the Docker image
+        run: docker push kokadva/kafka-kraft-kube:3.3.1
+
+  build_docker_compose:
+
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.head.repo.full_name, 'docker/docker-compose') || contains(github.ref, 'main')
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_KEY}}
+      - name: Build the Docker image
+        run: docker build -t kokadva/kafka-kraft-compose -f docker/docker-compose/Dockerfile .
+      - name: Push the Docker image
+        run: docker push kokadva/kafka-kraft-compose:3.3.1
