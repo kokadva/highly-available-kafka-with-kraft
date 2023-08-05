@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: kafka-container
-          image: kokadva/kafka
+          image: kokadva/kafka-kraft-kube
           imagePullPolicy: Always
           ports:
             - containerPort: 9092
