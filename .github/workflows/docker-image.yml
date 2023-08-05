@@ -22,7 +22,7 @@ jobs:
       - name: Login
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_KEY}}
       - name: Build the Docker image
-        run: docker build -t kokadva/kafka-kraft-kube -f docker/kubernetes/Dockerfile .
+        run: docker build -t kokadva/kafka-kraft-kube -f docker/kubernetes/Dockerfile docker/kubernetes/
       - name: Push the Docker image
         run: docker push kokadva/kafka-kraft-kube:3.3.1
 
@@ -36,6 +36,6 @@ jobs:
       - name: Login
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_KEY}}
       - name: Build the Docker image
-        run: docker build -t kokadva/kafka-kraft-compose -f docker/docker-compose/Dockerfile .
+        run: docker build -t kokadva/kafka-kraft-compose -f docker/docker-compose/Dockerfile docker/docker-compose
       - name: Push the Docker image
         run: docker push kokadva/kafka-kraft-compose:3.3.1
