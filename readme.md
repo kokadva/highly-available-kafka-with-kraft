@@ -58,11 +58,11 @@ To list all Kafka commands run [kafka_commands.py](kafka_commands.py) python scr
 
 You can use the following environment variables for configuration:
 
-- `NODE_ID`: Unique node id for each node, starting from 0. Default: `0` (config property: `node.id`)
+- (Required) `NODE_ID`: Unique node id for each node, starting from 0. Default: `0` (config property: `node.id`)
+- (Required) `REPLICAS`: Number of replicas or nodes in the cluster. Must be the same for all nodes. Default: `1`
 - `STORAGE_DIR`: Directory for storing logs. Actual logs will be saved in the `STORAGE_DIR/NODE_ID` directory.
   Default: `/mtn`
 - `CLUSTER_ID`: ID for the cluster. Must be the same for all nodes. Default: `oh-sxaDRTcyAr6pFRbXyzA`
-- `REPLICAS`: Number of replicas or nodes in the cluster. Must be the same for all nodes. Default: '1'
 - `INTER_BROKER_LISTENER_NAME`: Default: `BROKER_LISTENER` (config property: `inter.broker.listener.name`)
 - `CONTROLLER_LISTENER_NAMES`: Default: `CONTROLLER` (config property: `controller.listener.names`)
 - `LISTENERS`: Default: `CONTROLLER://:19092,BROKER_LISTENER://:19093,LOCAL://:9092,EXTERNAL://:9093` (config
