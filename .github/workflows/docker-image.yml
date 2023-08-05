@@ -24,7 +24,7 @@ jobs:
       - name: Build the Docker image
         run: docker build -t kokadva/kafka-kraft-kube -f docker/kubernetes/Dockerfile docker/kubernetes/
       - name: Push the Docker image
-        run: docker push kokadva/kafka-kraft-kube:3.3.1
+        run: docker push kokadva/kafka-kraft-kube
 
   build_docker_compose:
 
@@ -38,4 +38,4 @@ jobs:
       - name: Build the Docker image
         run: docker build -t kokadva/kafka-kraft-compose -f docker/docker-compose/Dockerfile docker/docker-compose
       - name: Push the Docker image
-        run: docker push kokadva/kafka-kraft-compose:3.3.1
+        run: docker push kokadva/kafka-kraft-compose
