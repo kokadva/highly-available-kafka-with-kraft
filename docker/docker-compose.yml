@@ -7,3 +7,4 @@ services:
     environment:
       NODE_ID: 0
       REPLICAS: 1
+
