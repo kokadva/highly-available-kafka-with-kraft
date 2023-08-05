@@ -12,30 +12,15 @@ on:
 
 jobs:
 
-  build_kubernetes:
+  build_deploy_docker_image:
 
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.head.repo.full_name, 'docker/kubernetes') || contains(github.ref, 'main')
 
     steps:
       - uses: actions/checkout@v3
       - name: Login
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_KEY}}
       - name: Build the Docker image
-        run: docker build -t kokadva/kafka-kraft-kube -f docker/kubernetes/Dockerfile docker/kubernetes/
+        run: docker build -t kokadva/kafka-kraft -f docker/Dockerfile docker/
       - name: Push the Docker image
-        run: docker push kokadva/kafka-kraft-kube
-
-  build_docker_compose:
-
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.head.repo.full_name, 'docker/docker-compose') || contains(github.ref, 'main')
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_ACCESS_KEY}}
-      - name: Build the Docker image
-        run: docker build -t kokadva/kafka-kraft-compose -f docker/docker-compose/Dockerfile docker/docker-compose
-      - name: Push the Docker image
-        run: docker push kokadva/kafka-kraft-compose
+        run: docker push kokadva/kafka-kraft

@@ -20,7 +20,7 @@ RUN apt update \
 WORKDIR /app/kafka
 
 COPY server.properties .
-COPY entrypoint.sh .
+COPY ./**.sh .
 
 RUN chmod +x entrypoint.sh
 
