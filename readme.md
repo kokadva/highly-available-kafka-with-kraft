@@ -74,7 +74,7 @@ You can use the following environment variables for configuration:
 - `LISTENER_SECURITY_PROTOCOL_MAP`:
   Default: `CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT` (config
   property: `listener.security.protocol.map`)
-- More coming soon ...
+- See others in the [config_setup.sh](docker%2Fconfig_setup.sh)
 
 ### Authors:
 
