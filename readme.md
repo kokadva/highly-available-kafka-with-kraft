@@ -10,51 +10,11 @@ without the need for ZooKeeper.
 
 This setup uses Kafka version 3.3.1.
 
-## Public docker images:
+## Public docker image:
 
-We have provided Docker images for both Kubernetes and docker-compose for your convenience:
+* `kokadva/kafka-kraft`
 
-* Kubernetes Docker Image: `kokadva/kafka-kraft-kube`
-* Docker-compose Docker Image: `kokadva/kafka-kraft-compose`
-
-## Pre-requisites
-
-Before you get started, make sure you have the following:
-
-- Docker
-- Kubernetes
-- Optional: Container Image Registry Account
-
-### How to Build and Run for Docker-compose
-
-Navigate to the docker/docker-compose directory in the repository, then:
-
-* Build the Docker image: `docker build -t kafka .`
-* Run Docker compose: `docker compose up`
-
-To run multiple brokers, simply add broker-1, broker-2, and so forth to the services in Docker compose and adjust the
-environment variables as needed (`NODE_ID`, `REPLICAS`).
-
-### How to Build and Run for Kubernetes
-
-Navigate to the docker/kubernetes directory in the repository. If you prefer not to build the image yourself, you can
-use ours: `kokadva/kafka-kraft-kube`
-
-Note: The Docker image must be built on the same OS as your Kubernetes nodes. A container image registry account is
-also necessary.
-
-* Login to your image registry: `docker login`
-* Build the Docker image: `docker build -t {your-username}/kafka .`
-* Push the Docker image: `docker push -t {your-username/kafka .`
-* Apply the Kubernetes configuration: `kubectl apply -f kafka.yml` (Modify configuration as needed)
-
-This process will launch 3 Kafka nodes in your Kubernetes cluster. To test this, you can ssh into one of your Kafka
-nodes using `kubectl exec -it kafka-0 -- /bin/bash`. Navigate to the `/app/kafka/bin directory` and run kafka commands.
-To list all Kafka commands run [kafka_commands.py](kafka_commands.py) python script.
-
-* `kubectl exec -it kafka-0 -- /bin/bash`
-
-### Kafka configuration:
+### Configuration:
 
 You can use the following environment variables for configuration:
 
@@ -75,6 +35,31 @@ You can use the following environment variables for configuration:
   Default: `CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT` (config
   property: `listener.security.protocol.map`)
 - See others in the [config_setup.sh](docker%2Fconfig_setup.sh)
+
+## How to build kafka-kraft docker image
+
+Navigate to the `docker` directory in the repository, then:
+
+* Build the Docker image: `docker build -t kafka-kraft .`
+
+### How to run with docker compose/kubernetes
+
+* For docker compose look at [docker-compose.yml](docker%2Fdocker-compose.yml) file
+* For kubernetes look at [kafka.yml](docker%2Fkafka.yml) config file
+
+### How to build a docker image of another version of kafka 
+
+Note: every version of kafka is different, if you use other version then 3.3.1 you'll may have to adjust these scripts:
+
+* [entrypoint.sh](docker%2Fentrypoint.sh)
+* [config_setup.sh](docker%2Fconfig_setup.sh)
+
+
+### Choose version 
+
+Go to https://kafka.apache.org/downloads, choose `scala` and `kafka` versions and replace existing with the chosen ones 
+here [Dockerfile](docker%2FDockerfile) and build the docker image
+
 
 ### Authors:
 
