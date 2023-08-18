@@ -10,12 +10,13 @@ mkdir -p $LOG_DIRS
 update_kafka_configuration
 
 # Define the format lock file path
-FORMAT_LOCK_FILE="$STORAGE_DIR/$NODE_ID/.format-lock"
-
+FORMAT_LOCK_FILE_DIR=$STORAGE_DIR/$NODE_ID
+FORMAT_LOCK_FILE="$FORMAT_LOCK_FILE_DIR/.format-lock"
 # If the format lock file does not exist, create it and then format the Kafka storage.
 # This is a protection mechanism to avoid reformatting existing storage.
 if [[ ! -f $FORMAT_LOCK_FILE ]]; then
-    # Create the format lock file
+
+    mkdir $FORMAT_LOCK_FILE_DIR
     touch $FORMAT_LOCK_FILE
     # Format Kafka storage. -t option sets the cluster id, and -c sets the configuration file
     ./bin/kafka-storage.sh format -t $CLUSTER_ID -c $SERVER_PROPERTIES_DIR
