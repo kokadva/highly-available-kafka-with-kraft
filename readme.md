@@ -57,6 +57,8 @@ Go to https://kafka.apache.org/downloads, choose `scala` and `kafka` versions an
 here [Dockerfile](docker%2FDockerfile) and build the docker image
 
 
+### For kafka cheat sheet edit and run [kafka_commands.py](kafka_commands.py)
+
 ### Authors:
 
 * Konstantine Dvalishvili 
