@@ -8,7 +8,7 @@ without the need for ZooKeeper.
 
 ## Kafka Version
 
-This setup uses Kafka version 3.3.1.
+This setup uses Kafka version 3.3.1
 
 ## Public docker image:
 
@@ -18,22 +18,18 @@ This setup uses Kafka version 3.3.1.
 
 You can use the following environment variables for configuration:
 
-- (Required) `NODE_ID`: Unique node id for each node, starting from 0. Default: `0` (config property: `node.id`)
+- (Required) `NODE_ID`: Unique node id for each node, starting from 0. Default: `HOSTNAME:6` (config property: `node.id`)
 - (Required) `REPLICAS`: Number of replicas or nodes in the cluster. Must be the same for all nodes. Default: `1`
-- `STORAGE_DIR`: Directory for storing logs. Actual logs will be saved in the `STORAGE_DIR/NODE_ID` directory.
-  Default: `/mtn`
-- `CLUSTER_ID`: ID for the cluster. Must be the same for all nodes. Default: `oh-sxaDRTcyAr6pFRbXyzA`
+- (Required) `CLUSTER_ID`: ID for the cluster. Must be the same for all nodes. Default: `oh-sxaDRTcyAr6pFRbXyzA`
+- (Required) `NODE_HOSTNAME_PREFIX` and `NODE_HOSTNAME_SUFFIX`: In order to connect kafka brokers for high availability they must 
+know each other's hostname, so you have to set these env variables correctly (`NODE_HOSTNAME_SUFFIX`) is not always needed, 
+look into the bash scripts for specifics
+- `STORAGE_DIR`: Directory for storing logs. Actual logs will be saved in the `STORAGE_DIR/NODE_ID` directory. Default: `/mtn`
 - `INTER_BROKER_LISTENER_NAME`: Default: `BROKER_LISTENER` (config property: `inter.broker.listener.name`)
 - `CONTROLLER_LISTENER_NAMES`: Default: `CONTROLLER` (config property: `controller.listener.names`)
-- `LISTENERS`: Default: `CONTROLLER://:19092,BROKER_LISTENER://:19093,LOCAL://:9092,EXTERNAL://:9093` (config
-  property: `listeners`)
-- `ADVERTISED_LISTENERS`: (config property: `advertised.listeners`)
-    - For docker, default: `BROKER_LISTENER://broker-$NODE_ID:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093`
-    - For Kubernetes,
-      default: `BROKER_LISTENER://kafka-$NODE_ID.$SERVICE.$NAMESPACE.svc.cluster.local:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093`
-- `LISTENER_SECURITY_PROTOCOL_MAP`:
-  Default: `CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT` (config
-  property: `listener.security.protocol.map`)
+- `LISTENERS`: Default: `CONTROLLER://:19092,BROKER_LISTENER://:19093,LOCAL://:9092,EXTERNAL://:9093` (config property: `listeners`)
+- `ADVERTISED_LISTENERS`: (config property: `advertised.listeners`, computed: `BROKER_LISTENER://$NODE_HOSTNAME_PREFIX$NODE_ID$NODE_HOSTNAME_SUFFIX:19093,LOCAL://localhost:9092,EXTERNAL://localhost:9093`)
+- `LISTENER_SECURITY_PROTOCOL_MAP`: Default: `CONTROLLER:PLAINTEXT,BROKER_LISTENER:PLAINTEXT,LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT` (config property: `listener.security.protocol.map`)
 - See others in the [config_setup.sh](docker%2Fconfig_setup.sh)
 
 ## How to build kafka-kraft docker image

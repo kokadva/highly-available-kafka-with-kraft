@@ -42,14 +42,14 @@ spec:
           env:
             - name: REPLICAS
               value: '3'
-            - name: SERVICE
-              value: kafka-svc
-            - name: NAMESPACE
-              value: default
-            - name: SHARE_DIR
-              value: /mnt/kafka
             - name: CLUSTER_ID
               value: oh-sxaDRTcyAr6pFRbXyzA
+            - name: STORAGE_DIR
+              value: /mnt/kafka
+            - name: NODE_HOSTNAME_PREFIX
+              value: 'kafka-'
+            - name: NODE_HOSTNAME_SUFFIX
+              value: '.kafka-svc.kafka.svc.cluster.local'
           volumeMounts:
             - name: data
               mountPath: /mnt/kafka
