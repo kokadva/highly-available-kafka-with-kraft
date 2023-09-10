@@ -4,6 +4,7 @@
 KAFKA_DIR="/app/kafka"
 SERVER_PROPERTIES_DIR=$KAFKA_DIR/server.properties
 KAFKA_BIN_DIR="${KAFKA_DIR}/bin"
+DEFAULT_MIN_INSYNC_REPLICAS="${DEFAULT_MIN_INSYNC_REPLICAS:-2}"
 PROCESS_ROLES="${PROCESS_ROLES:-broker,controller}"
 NUM_NETWORK_THREADS="${NUM_NETWORK_THREADS:-2}"
 NUM_IO_THREADS="${NUM_IO_THREADS:-4}"
@@ -58,6 +59,7 @@ update_kafka_configuration() {
     -e "s+^log.retention.check.interval.ms=.*+log.retention.check.interval.ms=$LOG_RETENTION_CHECK_INTERVAL_MS+" \
     -e "s+^node.id=.*+node.id=$NODE_ID+" \
     -e "s+^log.dirs=.*+log.dirs=$LOG_DIRS+" \
+    -e "s+^min.insync.replicas=.*+min.insync.replicas=$DEFAULT_MIN_INSYNC_REPLICAS+" \
     -e "s+^listeners=.*+listeners=$LISTENERS+" \
     -e "s+^advertised.listeners=.*+advertised.listeners=$ADVERTISED_LISTENERS+" \
     -e "s+^listener.security.protocol.map=.*+listener.security.protocol.map=$LISTENER_SECURITY_PROTOCOL_MAP+" \
