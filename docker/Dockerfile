@@ -6,13 +6,13 @@ ARG scalaversion=2.13
 ARG kafkaurl=https://archive.apache.org/dist/kafka/$kafkaversion/kafka_${scalaversion}-${kafkaversion}.tgz
 WORKDIR /app
 
-RUN apt update 
-RUN apt install -y --no-install-recommends wget 
+RUN apt-get update 
+RUN apt-get install -y --no-install-recommends wget 
 RUN wget ${kafkaurl} -O kafka.tgz 
 RUN tar xvzf kafka.tgz 
 RUN mv kafka_${scalaversion}-${kafkaversion} kafka 
-RUN apt remove -y wget 
-RUN apt autoremove -y 
+RUN apt-get remove -y wget 
+RUN apt-get autoremove -y 
 RUN rm -rf /var/lib/apt/lists/* 
 RUN rm kafka.tgz
 
