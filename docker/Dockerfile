@@ -1,4 +1,4 @@
-FROM arm64v8/openjdk
+FROM arm64v8/openjdk:latest
 
 
 ARG kafkaversion=3.3.1
